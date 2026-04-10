@@ -11,6 +11,9 @@ USER 1000
 # Working Directory
 WORKDIR /devOps/
 
+# Work with container volumes and hosts data sharing
+VOLUME /devOps/database/
+
 # Executing Command
 RUN sudo yum install python3 -y && sudo yum clean all
 
@@ -18,6 +21,14 @@ RUN sudo yum install python3 -y && sudo yum clean all
 # Expose port
 EXPOSE 8080
 
+# Environment Variable
 ENV HOSTNAME="Frontend"
 
+# Argument
 ARG VERSION="0.1"
+
+# Specify commands for custom images
+ENTRYPOINT ["python3"]
+
+CMD ["app.py"]
+
