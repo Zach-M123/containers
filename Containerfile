@@ -1,12 +1,10 @@
 # Specify container base images and add content
-FROM registry.redhat.io/rhscl/httpd-24-rhel7
+FROM docker.io/library/fedora
 
 # Add and extract tarball file
 ADD app.tar /devOps/
 
 # Configure runtime environment(user, working directory, commands)
-# user id
-USER 1000
 
 # Working Directory
 WORKDIR /devOps/
@@ -15,7 +13,7 @@ WORKDIR /devOps/
 VOLUME /devOps/database/
 
 # Executing Command
-RUN sudo yum install python3 -y && sudo yum clean all
+RUN dnf install python3 -y && dnf clean all
 
 # Expose ports and pass environment variables/arguments
 # Expose port
