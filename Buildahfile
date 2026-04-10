@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Registry variable
-registry="registry.access.redhat.com/ubi8/ubi:latest"
+registry="docker.io/library/fedora"
 
 # Working Container
 container=$( buildah from ${registry} )
@@ -29,7 +29,7 @@ buildah config --port 8080 ${container}
 buildah config --entrypoint '["python3", "app.py"]' ${container}
 
 # Commit the container to an image
-buildah commit ${container} blackApp:latest
+buildah commit ${container} backend:latest
 
 # Unmount
 buildah umount ${container}
