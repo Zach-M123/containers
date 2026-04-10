@@ -1,1 +1,38 @@
 #!/bin/bash
+
+# Registry variable
+registry="registry.access.redhat.com/ubi8/ubi:latest"
+
+# Working Container
+container=$( buildah from ${registry} )
+
+# Mount the container filesystem
+mountpoint=$( buildah mount ${container} )
+
+# Copy application files to mounted container
+buildah copy ${container} app.tar /app/
+
+# Execute run-time commands
+buildah run ${container} sudo dnf install python3 -y
+bulldah run ${container} sudo dnf clean all
+
+# SET working directory
+buildah config --workindir /app ${container}
+
+# SET environment variable
+buildah config --env APP_ENV="productions" ${container}
+
+# Expose port
+buildah config --port 8080 ${container}
+
+# SET entrypoint
+buildah config --entrypoint '["python3", "app.py"]' ${container}
+
+# Commit the container to an image
+buildah commit ${container} blackApp:latest
+
+# Unmount
+buildah umount ${container}
+
+# CleanUp
+buildah rm ${container}
