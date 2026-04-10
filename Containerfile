@@ -14,4 +14,10 @@ WORKDIR /devOps/
 # Executing Command
 RUN sudo yum install python3 -y && sudo yum clean all
 
+# Expose ports and pass environment variables/arguments
+# Expose port
+EXPOSE 8080
 
+ENV HOSTNAME="Frontend"
+
+ARG VERSION="0.1"
